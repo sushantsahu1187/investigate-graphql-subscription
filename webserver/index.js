@@ -14,6 +14,7 @@ const cors = require("cors");
 const { PubSub } = require("graphql-subscriptions");
 const { RedisPubSub } = require("graphql-redis-subscriptions");
 const Redis = require("ioredis");
+require("dotenv").config();
 
 const typeDefs = gql`
   type Query {
@@ -67,16 +68,10 @@ const resolvers = {
 };
 
 const start = async () => {
-  // const url = "surus-poc-dev.redis.cache.windows.net";
-  // const password = "BklZnl7ETziXJuSWYTA8FLsM2uWN7FlFPAzCaKBtsuw=";
-  // const port = "6380";
-  const url = "127.0.0.1";
-  const port = "6379";
-
   const options = {
-    host: process.env.REDIS_HOST || "surus-poc-dev.redis.cache.windows.net",
-    port: process.env.REDIS_PORT ? process.env.REDIS_PORT : "6380",
-    password: "BklZnl7ETziXJuSWYTA8FLsM2uWN7FlFPAzCaKBtsuw=",
+    host: process.env.REDIS_HOST || "127.0.0.1",
+    port: process.env.REDIS_PORT ? process.env.REDIS_PORT : "6379",
+    password: process.env.REDIS_PASSWORD || "",
     retryStrategy: (times) => {
       // reconnect after
       return Math.min(times * 50, 2000);
@@ -85,9 +80,6 @@ const start = async () => {
       rejectUnauthorized: false,
     },
   };
-
-  const redisHost =
-    "redis://:BklZnl7ETziXJuSWYTA8FLsM2uWN7FlFPAzCaKBtsuw=@surus-poc-dev.redis.cache.windows.net:6380";
 
   const pubsub = new RedisPubSub({
     publisher: new Redis(options),
