@@ -1,0 +1,17 @@
+{
+  "name": "webserver-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "graphql-redis-subscriptions": "^2.5.0",
+    "ioredis": "^5.2.4"
+  }
+}
